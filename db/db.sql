@@ -24,3 +24,19 @@ CREATE TABLE `user_role` (
 
 INSERT INTO role VALUES (1, 'USER');
 INSERT INTO role VALUES (2, 'PRIVELEGED_USER');
+
+DROP TABLE IF EXISTS note;
+CREATE TABLE note(
+	`note_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`url` varchar(36) NOT NULL,
+	`name` varchar(255) NOT NULL,
+	`text` varchar(255) DEFAULT NULL,
+	`numberOfViews` int NOT NULL DEFAULT 0,
+	`maxNumberOfViews` int NOT NULL,
+	UNIQUE KEY `url_UNIQUE` (`url`)
+) ENGINE=InnoDB;
+
+
+
+
+

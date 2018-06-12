@@ -8,6 +8,13 @@
 		<form th:action="@{/logout}" method="post">
             <input type="submit" value="Sign Out"/>
         </form>
-		<p>Hello World!</p>
+		<h2>Note</h2>
+		<form th:action="@{/result}" th:object="${note}" method="post">
+	        <input type="text" name="name" id="name" placeholder="Name" required="true" autofocus="true"/>
+	      	<input type="text" name="text" id="text" placeholder="Text" />
+	      	<input type="number" name="maxNumberOfViews" id="maxNumberOfViews" 
+	      		placeholder="Max number of views" required="true" />
+	      	<input type="submit" value="Submit"/>
+      	</form>
 	</body>
 </html>

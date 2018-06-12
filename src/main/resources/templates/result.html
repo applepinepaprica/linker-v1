@@ -1,0 +1,13 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>LINKER!</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</head>
+	<body>
+		<h2 th:text="'Note &ldquo;' + ${note.name} + '&rdquo; successfully created'"></h2>
+	   	<p>You can find it there: 
+	   		<a th:href="'http://localhost:8080/url/' + ${note.url}" 
+	   			th:text="'http://localhost:8080/url/' + ${note.url}"></a></p>
+	</body>
+</html>
