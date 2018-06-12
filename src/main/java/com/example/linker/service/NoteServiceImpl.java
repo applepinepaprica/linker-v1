@@ -55,10 +55,6 @@ public class NoteServiceImpl implements NoteService {
 	
 	public byte[] getFileDataByUrl(String url, String fileName) {
 		Note note = noteRepository.findByUrl(url);
-		
-		if (fileName.equals(note.getFile().getName())) {
-			return note.getFile().getData();
-		}
-		return null;
+		return note.getFile().getData();
 	}
 }

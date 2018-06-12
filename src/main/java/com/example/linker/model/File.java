@@ -43,12 +43,12 @@ public class File {
 		this.data = data;
 	}
 
-	public int getMaxNumberOfViews() {
+	public int getNumberOfViews() {
 		return numberOfViews;
 	}
 
-	public void setMaxNumberOfViews(int maxNumberOfViews) {
-		this.numberOfViews = maxNumberOfViews;
+	public void setNumberOfViews(int numberOfViews) {
+		this.numberOfViews = numberOfViews;
 	}
 
 	public int getNote_id() {
