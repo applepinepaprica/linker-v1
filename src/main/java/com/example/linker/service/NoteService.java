@@ -8,5 +8,7 @@ public interface NoteService {
 	
 	void save(Note note, MultipartFile file);
 	
-	Note showByUrl(String url);
+	Note showNoteByUrl(String url);
+	
+	byte[] getFileDataByUrl(String url, String filename);
 }

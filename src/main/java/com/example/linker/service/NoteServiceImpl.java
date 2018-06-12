@@ -39,7 +39,7 @@ public class NoteServiceImpl implements NoteService {
 		fileRepository.save(f);
 	}
 	
-	public Note showByUrl(String url) {
+	public Note showNoteByUrl(String url) {
 		Note note = noteRepository.findByUrl(url);
 		
 		note.setNumberOfViews(note.getNumberOfViews() + 1);
@@ -51,5 +51,14 @@ public class NoteServiceImpl implements NoteService {
 		}
 		
 		return note;
+	}
+	
+	public byte[] getFileDataByUrl(String url, String fileName) {
+		Note note = noteRepository.findByUrl(url);
+		
+		if (fileName.equals(note.getFile().getName())) {
+			return note.getFile().getData();
+		}
+		return null;
 	}
 }
