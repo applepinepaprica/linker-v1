@@ -9,11 +9,13 @@
             <input type="submit" value="Sign Out"/>
         </form>
 		<h2>Note</h2>
-		<form th:action="@{/result}" th:object="${note}" method="post">
+		<form th:action="@{/result}" th:object="${note}" method="post" enctype="multipart/form-data">
 	        <input type="text" name="name" id="name" placeholder="Name" required="true" autofocus="true"/>
 	      	<input type="text" name="text" id="text" placeholder="Text" />
 	      	<input type="number" name="maxNumberOfViews" id="maxNumberOfViews" 
 	      		placeholder="Max number of views" required="true" />
+			<input type="file" name="fileUpload" id="fileUpload"/>
+      		
 	      	<input type="submit" value="Submit"/>
       	</form>
 	</body>

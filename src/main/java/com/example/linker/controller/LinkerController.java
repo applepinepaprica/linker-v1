@@ -3,9 +3,12 @@ package com.example.linker.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.linker.model.Note;
 import com.example.linker.model.User;
@@ -43,8 +46,11 @@ public class LinkerController {
 	}
 	
 	@RequestMapping(value = { "/result" }, method = RequestMethod.POST)
-	public String result(Note note, Model model) {
-		noteService.save(note);
+	public String result(Note note, 
+    		@RequestParam("fileUpload") MultipartFile file,
+    		Model model) {
+		System.out.println(file.getOriginalFilename());
+		noteService.save(note, file);
 		model.addAttribute(note);
 		return "result";
 	}

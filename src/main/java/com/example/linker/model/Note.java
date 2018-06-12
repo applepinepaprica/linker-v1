@@ -21,6 +21,12 @@ public class Note {
 	private int numberOfViews = 0;
 	
 	private int maxNumberOfViews;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinTable(name = "file", 
+		joinColumns = @JoinColumn(name = "note_id"), 
+		inverseJoinColumns = @JoinColumn(name = "file_id"))
+	private File file;
 
 	public int getId() {
 		return id;
@@ -68,5 +74,13 @@ public class Note {
 
 	public void setMaxNumberOfViews(int maxNumberOfViews) {
 		this.maxNumberOfViews = maxNumberOfViews;
+	}
+
+	public File getFile() {
+		return file;
+	}
+
+	public void setFile(File file) {
+		this.file = file;
 	}
 }
