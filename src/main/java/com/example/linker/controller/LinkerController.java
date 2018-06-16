@@ -41,7 +41,7 @@ public class LinkerController {
 		return "login";
 	}
 
-	@RequestMapping(value = { "/", "/home" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/", "/home", "/result" }, method = RequestMethod.GET)
 	public String home(Model model) {
 		return "home";
 	}
