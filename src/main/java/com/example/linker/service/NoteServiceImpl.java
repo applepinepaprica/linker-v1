@@ -1,6 +1,7 @@
 package com.example.linker.service;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,5 +76,11 @@ public class NoteServiceImpl implements NoteService {
 		}
 		
 		return note.getFile().getData();
+	}
+	
+	public List<Note> getUsersNotes() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userRepository.findByUsername(auth.getName());
+		return user.getNotes();
 	}
 }

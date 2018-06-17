@@ -10,7 +10,6 @@
 	    <a th:href="'/url/' + ${note.url}"  th:text="'http://localhost:8080/url/' + ${note.url}"></a>
 	    <p th:text="${note.NumberOfViews}" />
 	    <p th:text="${note.maxNumberOfViews}" />
-   	    <a th:href="'/url/' + ${note.url} + '/' + ${note.file.name}"  th:text="${note.file.name}"></a>
-	    
+   	    <a th:href="'/url/' + ${note.url} + '/' + ${note.file.name}"  th:text="${note.file.name}"></a> 
 	</body>
 </html>

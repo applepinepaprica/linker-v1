@@ -55,6 +55,12 @@ public class LinkerController {
 		return "result";
 	}
 	
+	@RequestMapping(value = { "/list" }, method = RequestMethod.GET)
+	public String list(Model model) {
+		model.addAttribute("notes", noteService.getUsersNotes());
+		return "list";
+	}
+	
 	@RequestMapping(value = { "/url/{url}" }, method = RequestMethod.GET)
 	public String result(@PathVariable String url, Model model) {
 		Note note = noteService.showNoteByUrl(url);

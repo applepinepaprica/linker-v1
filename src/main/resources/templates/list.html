@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>LINKER!</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</head>
+	<body>
+		<form th:action="@{/logout}" method="post">
+            <input type="submit" value="Sign Out"/>
+        </form>
+		<h2>Notes</h2>
+		<table>
+			<thead>
+				<tr>
+					<th>Url</th>
+					<th>Name</th>
+					<th>Number of views</th>
+					<th>Max number of views</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="note : ${notes}">
+					<td th:text="${note.url}">Text ...</td>
+					<td th:text="${note.name}">Text ...</td>
+					<td th:text="${note.numberOfViews}">Text ...</td>
+					<td th:text="${note.maxNumberOfViews}">Text ...</td>
+				</tr>
+			</tbody>
+		</table>
+	</body>
+</html>
