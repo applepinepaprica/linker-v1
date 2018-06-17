@@ -26,6 +26,15 @@ INSERT INTO role VALUES (1, 'USER');
 INSERT INTO role VALUES (2, 'PRIVELEGED_USER');
 
 DROP TABLE IF EXISTS note;
+DROP TABLE IF EXISTS file;
+
+CREATE TABLE file(
+	`file_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`name` varchar(255) NOT NULL,
+	`data` longblob NOT NULL,
+	`numberOfViews` int NOT NULL DEFAULT 0
+) ENGINE=InnoDB;
+
 CREATE TABLE note(
 	`note_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`url` varchar(36) NOT NULL,
@@ -33,15 +42,11 @@ CREATE TABLE note(
 	`text` varchar(255) DEFAULT NULL,
 	`numberOfViews` int NOT NULL DEFAULT 0,
 	`maxNumberOfViews` int NOT NULL,
-	UNIQUE KEY `url_UNIQUE` (`url`)
-) ENGINE=InnoDB;
-
-DROP TABLE IF EXISTS file;
-CREATE TABLE file(
-	`file_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	`name` varchar(255) NOT NULL,
-	`data` longblob NOT NULL,
-	`numberOfViews` int NOT NULL DEFAULT 0
+	`file_id` int DEFAULT NULL,
+	`user_id` int DEFAULT NULL,
+	UNIQUE KEY `url_UNIQUE` (`url`),
+	CONSTRAINT `FK859n2jvi8ivhui0rl0etyekv` FOREIGN KEY (`file_id`) REFERENCES `file` (`file_id`),
+	CONSTRAINT `FK859n2jvi8ivhui0rl0esqsfb` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
 ) ENGINE=InnoDB;
 
 

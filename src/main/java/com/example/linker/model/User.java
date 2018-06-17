@@ -1,6 +1,9 @@
 package com.example.linker.model;
 
 import javax.persistence.*;
+import com.example.linker.model.Note;
+
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -18,8 +21,16 @@ public class User {
 	private String password;
 	
 	@ManyToMany
-	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	@JoinTable(name = "user_role", 
+		joinColumns = @JoinColumn(name = "user_id"), 
+		inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles;
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "note", 
+		joinColumns = @JoinColumn(name = "user_id"), 
+		inverseJoinColumns = @JoinColumn(name = "note_id"))
+	private List<Note> notes;
 
 	public int getId() {
 		return id;
@@ -51,5 +62,13 @@ public class User {
 	
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
+	}
+
+	public List<Note> getNotes() {
+		return notes;
+	}
+
+	public void setNotes(List<Note> notes) {
+		this.notes = notes;
 	}
 }

@@ -25,6 +25,8 @@ public class Note {
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "file_id")
 	private File file;
+	
+	private Integer user_id = null;
 
 	public int getId() {
 		return id;
@@ -80,5 +82,13 @@ public class Note {
 
 	public void setFile(File file) {
 		this.file = file;
+	}
+
+	public Integer getUser_id() {
+		return user_id;
+	}
+
+	public void setUser_id(Integer user_id) {
+		this.user_id = user_id;
 	}
 }

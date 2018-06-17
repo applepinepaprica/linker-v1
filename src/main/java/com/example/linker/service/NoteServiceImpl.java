@@ -4,18 +4,25 @@ import java.io.IOException;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.linker.model.File;
 import com.example.linker.model.Note;
+import com.example.linker.model.User;
 import com.example.linker.repository.NoteRepository;
+import com.example.linker.repository.UserRepository;
 
 @Service
 public class NoteServiceImpl implements NoteService {
 
 	@Autowired
 	private NoteRepository noteRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
 	
 	public void save(Note note, MultipartFile file)  {
 		note.setUrl(UUID.randomUUID().toString());
@@ -32,6 +39,12 @@ public class NoteServiceImpl implements NoteService {
 			
 			note.setFile(f);
 		}
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userRepository.findByUsername(auth.getName());
+		if (user != null) {
+			note.setUser_id(user.getId());
+		} 
 		
 		noteRepository.save(note);
 	}
