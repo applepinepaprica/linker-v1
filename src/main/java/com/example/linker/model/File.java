@@ -16,8 +16,6 @@ public class File {
 	private byte[] data;
 	
 	private int numberOfViews = 0;
-	
-	private int note_id;
 
 	public int getId() {
 		return id;
@@ -49,13 +47,5 @@ public class File {
 
 	public void setNumberOfViews(int numberOfViews) {
 		this.numberOfViews = numberOfViews;
-	}
-
-	public int getNote_id() {
-		return note_id;
-	}
-
-	public void setNote_id(int note_id) {
-		this.note_id = note_id;
 	}
 }

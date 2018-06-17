@@ -41,9 +41,7 @@ CREATE TABLE file(
 	`file_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`name` varchar(255) NOT NULL,
 	`data` longblob NOT NULL,
-	`numberOfViews` int NOT NULL DEFAULT 0,
-	`note_id` int NOT NULL,
-	 CONSTRAINT `FKghyn2jvi8ivhui0rl0esqyto` FOREIGN KEY (`note_id`) REFERENCES `note` (`note_id`)
+	`numberOfViews` int NOT NULL DEFAULT 0
 ) ENGINE=InnoDB;
 
 

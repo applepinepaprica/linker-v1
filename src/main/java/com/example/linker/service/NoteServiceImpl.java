@@ -9,7 +9,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.linker.model.File;
 import com.example.linker.model.Note;
-import com.example.linker.repository.FileRepository;
 import com.example.linker.repository.NoteRepository;
 
 @Service
@@ -18,25 +17,23 @@ public class NoteServiceImpl implements NoteService {
 	@Autowired
 	private NoteRepository noteRepository;
 	
-	@Autowired
-	private FileRepository fileRepository;
-	
 	public void save(Note note, MultipartFile file)  {
 		note.setUrl(UUID.randomUUID().toString());
 		
-		noteRepository.save(note);
-		
-		File f = new File();
-		f.setName(file.getOriginalFilename());
-		f.setNote_id(note.getId());
-		
-		try {
-			f.setData(file.getBytes());
-		} catch (IOException e) {
-			e.printStackTrace();
+		if (!file.isEmpty()) {
+			File f = new File();
+			f.setName(file.getOriginalFilename());
+			
+			try {
+				f.setData(file.getBytes());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+			note.setFile(f);
 		}
 		
-		fileRepository.save(f);
+		noteRepository.save(note);
 	}
 	
 	public Note showNoteByUrl(String url) {
@@ -55,6 +52,15 @@ public class NoteServiceImpl implements NoteService {
 	
 	public byte[] getFileDataByUrl(String url, String fileName) {
 		Note note = noteRepository.findByUrl(url);
+		
+		note.getFile().setNumberOfViews(note.getFile().getNumberOfViews() + 1);
+		
+		if (note.getFile().getNumberOfViews() == note.getMaxNumberOfViews()) {
+			noteRepository.delete(note);
+		} else {
+			noteRepository.save(note);
+		}
+		
 		return note.getFile().getData();
 	}
 }

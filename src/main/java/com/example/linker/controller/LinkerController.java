@@ -50,7 +50,6 @@ public class LinkerController {
 	public String result(Note note, 
     		@RequestParam("fileUpload") MultipartFile file,
     		Model model) {
-		System.out.println(file.getOriginalFilename());
 		noteService.save(note, file);
 		model.addAttribute(note);
 		return "result";
