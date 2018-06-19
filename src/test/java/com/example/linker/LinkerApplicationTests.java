@@ -55,7 +55,8 @@ public class LinkerApplicationTests {
 		noteService.save(note);
 		
 		for (int i = 0; i < note.getMaxNumberOfViews(); i++) {
-			noteService.showNoteByUrl(note.getUrl());
+			Note note2 = noteService.showNoteByUrl(note.getUrl());
+			assertThat(note2.getNumberOfViews()).isEqualTo(i + 1);
 		}
 		
 		assertThrows(NullPointerException.class, () -> {
