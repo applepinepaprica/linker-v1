@@ -26,7 +26,6 @@ public class NoteServiceImpl implements NoteService {
 	private UserRepository userRepository;
 	
 	public void save(Note note, MultipartFile file)  {
-		note.setUrl(UUID.randomUUID().toString());
 		
 		if (!file.isEmpty()) {
 			File f = new File();
@@ -47,6 +46,11 @@ public class NoteServiceImpl implements NoteService {
 			note.setUser_id(user.getId());
 		} 
 		
+		save(note);
+	}
+	
+	public void save(Note note) {
+		note.setUrl(UUID.randomUUID().toString());
 		noteRepository.save(note);
 	}
 	

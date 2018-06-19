@@ -10,6 +10,8 @@ public interface NoteService {
 	
 	void save(Note note, MultipartFile file);
 	
+	void save(Note note);
+	
 	Note showNoteByUrl(String url);
 	
 	byte[] getFileDataByUrl(String url, String filename);
