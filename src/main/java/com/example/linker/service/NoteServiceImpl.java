@@ -40,17 +40,20 @@ public class NoteServiceImpl implements NoteService {
 			note.setFile(f);
 		}
 		
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User user = userRepository.findByUsername(auth.getName());
-		if (user != null) {
-			note.setUser_id(user.getId());
-		} 
-		
 		save(note);
 	}
 	
 	public void save(Note note) {
 		note.setUrl(UUID.randomUUID().toString());
+		
+		try {
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			User user = userRepository.findByUsername(auth.getName());
+			note.setUser_id(user.getId());
+		}
+		catch (NullPointerException e) {	
+		}
+		
 		noteRepository.save(note);
 	}
 	

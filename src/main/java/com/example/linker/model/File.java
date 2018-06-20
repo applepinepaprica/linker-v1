@@ -1,5 +1,7 @@
 package com.example.linker.model;
 
+import java.util.Arrays;
+
 import javax.persistence.*;
 
 @Entity
@@ -47,5 +49,28 @@ public class File {
 
 	public void setNumberOfViews(int numberOfViews) {
 		this.numberOfViews = numberOfViews;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		File other = (File) obj;
+		if (!Arrays.equals(data, other.data))
+			return false;
+		if (id != other.id)
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (numberOfViews != other.numberOfViews)
+			return false;
+		return true;
 	}
 }
