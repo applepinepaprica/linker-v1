@@ -6,21 +6,21 @@
 	<header th:insert="fragments.html :: navbar"> </header>
 	<div class="container">
 		<h2>Notes</h2>
-		<table>
+		<table class="table table-hover">
 			<thead>
 				<tr>
-					<th>Url</th>
-					<th>Name</th>
-					<th>Number of views</th>
-					<th>Max number of views</th>
+					<th scope="col">Name</th>
+					<th scope="col">Url</th>
+					<th scope="col">Number of views</th>
+					<th scope="col">Max number of views</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr th:each="note : ${notes}">
-					<td th:text="${note.url}">Text ...</td>
-					<td th:text="${note.name}">Text ...</td>
-					<td th:text="${note.numberOfViews}">Text ...</td>
-					<td th:text="${note.maxNumberOfViews}">Text ...</td>
+					<th scope="row" th:text="${note.name}" />
+					<td th:text="${note.url}" />
+					<td th:text="${note.numberOfViews}" />
+					<td th:text="${note.maxNumberOfViews}" />
 				</tr>
 			</tbody>
 		</table>

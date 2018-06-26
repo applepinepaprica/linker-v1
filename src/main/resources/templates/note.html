@@ -8,11 +8,11 @@
 		<h2 th:text="${note.name}"></h2>
 		<p th:text="${note.text}" />
 		<p>
-			<a th:href="'/url/' + ${note.url}" th:text="Link"></a>
+			<a th:href="'/url/' + ${note.url}" th:text="'Link to note'"></a>
 		</p>
-		<p th:text="${note.NumberOfViews}" />
-		<p th:text="${note.maxNumberOfViews}" />
-		<p>
+		<p th:text="'Total number of views: ' + ${note.NumberOfViews}" />
+		<p th:text="'Max number of views: ' + ${note.maxNumberOfViews}" />
+		<p th:if="${note.getFile() != null}">
 			<a th:href="'/url/' + ${note.url} + '/' + ${note.file.name}"
 				th:text="${note.file.name}"></a>
 		</p>

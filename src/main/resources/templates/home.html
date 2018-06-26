@@ -8,13 +8,26 @@
 		<h2>Note</h2>
 		<form th:action="@{/result}" th:object="${note}" method="post"
 			enctype="multipart/form-data">
-			<input type="text" name="name" id="name" placeholder="Name"
-				required="true" autofocus="true" /> <input type="text" name="text"
-				id="text" placeholder="Text" /> <input type="number"
-				name="maxNumberOfViews" id="maxNumberOfViews"
-				placeholder="Max number of views" required="true" /> <input
-				type="file" name="fileUpload" id="fileUpload" /> <input
-				type="submit" value="Submit" />
+			<p>
+				<input type="text" class="form-control" name="name" id="name"
+					placeholder="Name" required="true" autofocus="true" />
+			</p>
+			<p>
+				<input type="text" class="form-control" name="text" id="text"
+					placeholder="Text" />
+			</p>
+			<p>
+				<input type="number" class="form-control" name="maxNumberOfViews"
+					id="maxNumberOfViews" placeholder="Max number of views"
+					required="true" />
+			</p>
+			<p>
+				<input type="file" class="form-control" name="fileUpload"
+					id="fileUpload" />
+			</p>
+			<p>
+				<input type="submit" class="btn btn-primary" value="Submit" />
+			</p>
 		</form>
 	</div>
 </body>

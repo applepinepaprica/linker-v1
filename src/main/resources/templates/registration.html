@@ -7,10 +7,21 @@
 	<div class="container">
 		<h2>Registration</h2>
 		<form th:action="@{/registration}" th:object="${user}" method="post">
-			<input type="text" name="username" id="username"
-				placeholder="UserName" required="true" autofocus="true" /> <input
-				type="password" name="password" id="password" placeholder="Password"
-				required="true" /> <input type="submit" value="Sign Up" />
+			<p>
+				<input type="text" class="form-control" name="username"
+					id="username" placeholder="UserName" required="true"
+					autofocus="true" />
+			</p>
+			<p>
+				<input type="password" class="form-control" name="password"
+					id="password" placeholder="Password" required="true" />
+			</p>
+			<p>
+				<a th:href="'/login'" th:text="'Return to login page.'"></a>
+			</p>
+			<p>
+				<input type="submit" class="btn btn-primary" value="Sign Up" />
+			</p>
 		</form>
 	</div>
 </body>
