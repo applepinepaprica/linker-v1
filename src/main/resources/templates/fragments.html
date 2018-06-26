@@ -30,7 +30,7 @@
 				</ul>
 				<ul class="navbar-nav">
 					<div sec:authorize="isAuthenticated()">
-						<li class="nav-item"><a class="nav-link" th:href="/logout">Logout</a>
+						<li class="nav-item"><a class="nav-link" href="/logout">Logout</a>
 						</li>
 					</div>
 					<div sec:authorize="!isAuthenticated()">
