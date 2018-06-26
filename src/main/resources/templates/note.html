@@ -1,15 +1,21 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<title>LINKER!</title>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	</head>
-	<body>
-		<p th:text="${note.name}" />
-	    <p th:text="${note.text}" />
-	    <a th:href="'/url/' + ${note.url}"  th:text="Link"></a>
-	    <p th:text="${note.NumberOfViews}" />
-	    <p th:text="${note.maxNumberOfViews}" />
-   	    <a th:href="'/url/' + ${note.url} + '/' + ${note.file.name}"  th:text="${note.file.name}"></a> 
-	</body>
+<head th:include="fragments.html :: head">
+</head>
+<body>
+	<header th:insert="fragments.html :: navbar"> </header>
+	<div class="container">
+		<h2 th:text="${note.name}"></h2>
+		<p th:text="${note.text}" />
+		<p>
+			<a th:href="'/url/' + ${note.url}" th:text="Link"></a>
+		</p>
+		<p th:text="${note.NumberOfViews}" />
+		<p th:text="${note.maxNumberOfViews}" />
+		<p>
+			<a th:href="'/url/' + ${note.url} + '/' + ${note.file.name}"
+				th:text="${note.file.name}"></a>
+		</p>
+	</div>
+</body>
 </html>

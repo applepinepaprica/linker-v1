@@ -1,15 +1,17 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<title>LINKER!</title>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	</head>
-	<body>
+<head th:include="fragments.html :: head">
+</head>
+<body>
+	<header th:insert="fragments.html :: navbar"> </header>
+	<div class="container">
 		<h2>Login</h2>
 		<form th:action="@{/login}" method="post">
-	        <input type="text" name="username" id="username" placeholder="UserName" required="true" autofocus="true"/>
-	      	<input type="password" name="password" id="password" placeholder="Password" required="true"/>
-	      	<input type="submit" value="Sign In"/>
-      	</form>
-	</body>
+			<input type="text" name="username" id="username"
+				placeholder="UserName" required="true" autofocus="true" /> <input
+				type="password" name="password" id="password" placeholder="Password"
+				required="true" /> <input type="submit" value="Sign In" />
+		</form>
+	</div>
+</body>
 </html>

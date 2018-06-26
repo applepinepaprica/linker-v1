@@ -1,13 +1,16 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<title>LINKER!</title>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	</head>
-	<body>
-		<h2 th:text="'Note &ldquo;' + ${note.name} + '&rdquo; successfully created'"></h2>
-	   	<p>You can find it there: 
-	   		<a th:href="'/url/' + ${note.url}" 
-	   			th:text="Link"></a></p>
-	</body>
+<head th:include="fragments.html :: head">
+</head>
+<body>
+	<header th:insert="fragments.html :: navbar"> </header>
+	<div class="container">
+		<h2
+			th:text="'Note &ldquo;' + ${note.name} + '&rdquo; successfully created'"></h2>
+		<p>
+			You can find it there: <a th:href="'/url/' + ${note.url}"
+				th:text="Link"></a>
+		</p>
+	</div>
+</body>
 </html>

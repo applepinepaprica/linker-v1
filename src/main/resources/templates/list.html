@@ -1,13 +1,10 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<title>LINKER!</title>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	</head>
-	<body>
-		<form th:action="@{/logout}" method="post">
-            <input type="submit" value="Sign Out"/>
-        </form>
+<head th:include="fragments.html :: head">
+</head>
+<body>
+	<header th:insert="fragments.html :: navbar"> </header>
+	<div class="container">
 		<h2>Notes</h2>
 		<table>
 			<thead>
@@ -27,5 +24,6 @@
 				</tr>
 			</tbody>
 		</table>
-	</body>
+	</div>
+</body>
 </html>

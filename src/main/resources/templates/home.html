@@ -1,18 +1,21 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<title>LINKER!</title>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	</head>
-	<body>
+<head th:include="fragments.html :: head">
+</head>
+<body>
+	<header th:insert="fragments.html :: navbar"> </header>
+	<div class="container">
 		<h2>Note</h2>
-		<form th:action="@{/result}" th:object="${note}" method="post" enctype="multipart/form-data">
-	        <input type="text" name="name" id="name" placeholder="Name" required="true" autofocus="true"/>
-	      	<input type="text" name="text" id="text" placeholder="Text" />
-	      	<input type="number" name="maxNumberOfViews" id="maxNumberOfViews" 
-	      		placeholder="Max number of views" required="true" />
-			<input type="file" name="fileUpload" id="fileUpload"/>
-	      	<input type="submit" value="Submit"/>
-      	</form>
-	</body>
+		<form th:action="@{/result}" th:object="${note}" method="post"
+			enctype="multipart/form-data">
+			<input type="text" name="name" id="name" placeholder="Name"
+				required="true" autofocus="true" /> <input type="text" name="text"
+				id="text" placeholder="Text" /> <input type="number"
+				name="maxNumberOfViews" id="maxNumberOfViews"
+				placeholder="Max number of views" required="true" /> <input
+				type="file" name="fileUpload" id="fileUpload" /> <input
+				type="submit" value="Submit" />
+		</form>
+	</div>
+</body>
 </html>
