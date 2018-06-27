@@ -10,11 +10,15 @@
 			<p>
 				<input type="text" class="form-control" name="username"
 					id="username" placeholder="UserName" required="true"
-					autofocus="true" />
+					autofocus="true" maxlength="20" /> 
+				<small class="text-danger"
+					th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></small>
 			</p>
 			<p>
 				<input type="password" class="form-control" name="password"
-					id="password" placeholder="Password" required="true" />
+					id="password" placeholder="Password" required="true" maxlength="20" />
+				<small class="text-danger" th:if="${#fields.hasErrors('password')}"
+					th:errors="*{password}"></small>
 			</p>
 			<p>
 				<a href="/login" th:text="'Return to login page.'"></a>

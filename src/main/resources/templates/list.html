@@ -18,7 +18,7 @@
 			<tbody>
 				<tr th:each="note : ${notes}">
 					<th scope="row" th:text="${note.name}" />
-					<td th:text="${note.url}" />
+					<td><a th:href="'/url/' + ${note.url}" th:text="${note.url}"></a></td>
 					<td th:text="${note.numberOfViews}" />
 					<td th:text="${note.maxNumberOfViews}" />
 				</tr>

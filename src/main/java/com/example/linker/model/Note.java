@@ -1,6 +1,12 @@
 package com.example.linker.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "note")
@@ -10,22 +16,29 @@ public class Note {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "note_id")
 	private int id;
-	
+
 	@Column(unique = true)
 	private String url;
-	
+
+	@NotNull(message = "Name cannot be null")
+    @NotBlank(message = "Name cannot be blank")
+    @Size(max = 40, message = "Name must be less than 40 characters")
 	private String name;
 
+    @Size(max = 5000, message = "Text must be less than 5000 characters")
 	private String text;
-	
+
 	private int numberOfViews = 0;
-	
-	private int maxNumberOfViews;
-	
+
+	@NotNull
+	@Min(value = 1, message = "Max number of views should not be less than 1")
+    @Max(value = 65535, message = "Max number of views should not be greater than 65535")
+	private Integer maxNumberOfViews;
+
 	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "file_id")
+	@JoinColumn(name = "file_id")
 	private File file;
-	
+
 	private Integer user_id = null;
 
 	public int getId() {
@@ -68,11 +81,11 @@ public class Note {
 		this.numberOfViews = numberOfViews;
 	}
 
-	public int getMaxNumberOfViews() {
+	public Integer getMaxNumberOfViews() {
 		return maxNumberOfViews;
 	}
 
-	public void setMaxNumberOfViews(int maxNumberOfViews) {
+	public void setMaxNumberOfViews(Integer maxNumberOfViews) {
 		this.maxNumberOfViews = maxNumberOfViews;
 	}
 
@@ -108,7 +121,10 @@ public class Note {
 			return false;
 		if (id != other.id)
 			return false;
-		if (maxNumberOfViews != other.maxNumberOfViews)
+		if (maxNumberOfViews == null) {
+			if (other.maxNumberOfViews != null)
+				return false;
+		} else if (!maxNumberOfViews.equals(other.maxNumberOfViews))
 			return false;
 		if (name == null) {
 			if (other.name != null)
@@ -134,4 +150,6 @@ public class Note {
 			return false;
 		return true;
 	}
+
+	
 }

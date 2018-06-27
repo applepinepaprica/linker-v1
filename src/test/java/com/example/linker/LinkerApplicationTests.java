@@ -9,11 +9,13 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.Repeat;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.TransactionSystemException;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Random;
+
 import org.apache.commons.lang3.RandomStringUtils;
 
 import com.example.linker.model.File;
@@ -41,7 +43,6 @@ public class LinkerApplicationTests {
 	private UserRepository userRepository;
 	
 	@Test
-	@Repeat(30)
 	public void savingAndDeleting() {
 		Note note = generateRandomNote(true);
 		noteService.save(note);
@@ -60,7 +61,6 @@ public class LinkerApplicationTests {
 	}
 	
 	@Test
-	@Repeat(30)
 	public void showNoteByUrl() {
 		Note note = generateRandomNote(true);
 		noteService.save(note);
@@ -76,7 +76,6 @@ public class LinkerApplicationTests {
 	}
 	
 	@Test
-	@Repeat(30)
 	public void showFile() {
 		Note note = generateRandomNote(false);
 		noteService.save(note);
@@ -91,9 +90,9 @@ public class LinkerApplicationTests {
 	}
 	
 	@Test
-	@Repeat(30)
 	public void registration() {
 		User user = generateRandomUser();
+		
 		userService.save(user);
 		
 		User user2 = userRepository.findByUsername(user.getUsername());
@@ -104,7 +103,6 @@ public class LinkerApplicationTests {
 	}
 	
 	@Test
-	@Repeat(30)
 	@WithMockUser("1")
 	public void savingAndDeletingWithAuth() {
 		Note note = generateRandomNote(true);
@@ -125,6 +123,164 @@ public class LinkerApplicationTests {
 		
 		assertThrows(NullPointerException.class, () -> {
 			noteService.showNoteByUrl(note.getUrl());
+		  });		
+	}
+	
+	@Test
+	public void validation_NullUser() {
+		User user = new User();
+		
+		assertThrows(NullPointerException.class, () -> {
+			userService.save(user);
+		  });		
+	}
+	
+	@Test
+	public void validation_NullUsername() {
+		User user = new User();
+		user.setPassword("ghtyrhnf");
+		
+		assertThrows(TransactionSystemException.class, () -> {
+			userService.save(user);
+		  });		
+	}
+	
+	@Test
+	public void validation_BlankUsername() {
+		User user = new User();
+		user.setPassword("ghtyrhnf");
+		user.setUsername("         ");
+		
+		assertThrows(TransactionSystemException.class, () -> {
+			userService.save(user);
+		  });		
+	}
+	
+	@Test
+	public void validation_NullPasssword() {
+		User user = new User();
+		user.setUsername("ghtyrhnf");
+		
+		assertThrows(NullPointerException.class, () -> {
+			userService.save(user);
+		  });		
+	}
+	
+	/*@Test
+	public void validation_BlankPasssword() {
+		User user = new User();
+		user.setUsername("ghtyrhnf");
+		user.setPassword("          ");
+		
+		assertThrows(TransactionSystemException.class, () -> {
+			userService.save(user);
+		  });		
+	}*/
+	
+	@Test
+	public void validation_MinSizeUsername() {
+		User user = new User();
+		user.setPassword("ghtyrhnt");
+		user.setUsername("ghtyrhn");
+		
+		assertThrows(TransactionSystemException.class, () -> {
+			userService.save(user);
+		  });		
+	}
+	
+	@Test
+	public void validation_MaxSizeUsername() {
+		User user = new User();
+		user.setPassword("ghtyrhnt");
+		user.setUsername("ghtyrhnghtrytfhgtre92");
+		
+		assertThrows(TransactionSystemException.class, () -> {
+			userService.save(user);
+		  });		
+	}
+	
+	@Test
+	public void validation_NullNote() {
+		Note note = new Note();
+		
+		assertThrows(TransactionSystemException.class, () -> {
+			noteService.save(note);
+		  });		
+	}
+	
+	@Test
+	public void validation_NullName() {
+		Note note = new Note();
+		note.setMaxNumberOfViews(1);
+		
+		assertThrows(TransactionSystemException.class, () -> {
+			noteService.save(note);
+		  });		
+	}
+	
+	@Test
+	public void validation_NullMaxNumberOfViews() {
+		Note note = new Note();
+		note.setName("One morning, when Gregor Samsa woke from");
+		
+		assertThrows(TransactionSystemException.class, () -> {
+			noteService.save(note);
+		  });		
+	}
+	
+	@Test
+	public void validation_BlankName() {
+		Note note = new Note();
+		note.setMaxNumberOfViews(1);
+		note.setName("          ");
+		
+		assertThrows(TransactionSystemException.class, () -> {
+			noteService.save(note);
+		  });		
+	}
+	
+	@Test
+	public void validation_SizeName() {
+		Note note = new Note();
+		note.setMaxNumberOfViews(1);
+		note.setName("One morning, when Gregor Samsa woke from.");
+		
+		assertThrows(TransactionSystemException.class, () -> {
+			noteService.save(note);
+		  });		
+	}
+	
+	@Test
+	public void validation_SizeText() {
+		Note note = new Note();
+		note.setMaxNumberOfViews(1);
+		note.setName("One morning, when Gregor Samsa woke from");
+		note.setText(generateRandomString(5000));
+		
+		assertThrows(TransactionSystemException.class, () -> {
+			noteService.save(note);
+		  });		
+	}
+	
+	@Test
+	public void validation_MinSizeMaxNumberOfViews() {
+		Note note = new Note();
+		note.setMaxNumberOfViews(0);
+		note.setName("One morning, when Gregor Samsa woke from");
+		
+		assertThrows(TransactionSystemException.class, () -> {
+			noteService.save(note);
+		  });		
+	}
+	
+	@Test
+	public void validation_MaxSizeMaxNumberOfViews() {
+		Note note = new Note();
+		note.setMaxNumberOfViews(65536);
+		note.setName("One morning, when Gregor Samsa woke from");
+		
+		assertThrows(TransactionSystemException.class, () -> {
+			noteService.save(note);
 		  });		
 	}
 	
@@ -149,10 +305,12 @@ public class LinkerApplicationTests {
 			note.setText(generateRandomString(rand.nextInt(200)));
 		}
 		
+		System.out.println("============================");
 		System.out.println(note.getName() + " " + 
 				note.getMaxNumberOfViews() + " " + 
 				note.getText() + " " + 
 				note.getFile());
+		System.out.println("============================");
 		
 		assert checkNote(note);
 		
@@ -173,8 +331,13 @@ public class LinkerApplicationTests {
 		Random rand = new Random();
 		
 		User user = new User();
-		user.setUsername(generateRandomString(rand.nextInt(30)));
-		user.setPassword(generateRandomString(rand.nextInt(30)));
+		user.setUsername(generateRandomString(rand.nextInt(12) + 7));
+		user.setPassword(generateRandomString(rand.nextInt(12) + 7));
+		
+		System.out.println("============================");
+		System.out.println(user.getUsername());
+		System.out.println(user.getPassword());
+		System.out.println("============================");
 		
 		return user;
 	}
