@@ -1,7 +1,9 @@
 package com.example.linker;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,9 +14,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.TransactionSystemException;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Random;
+import java.util.Set;
+
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+import javax.validation.ConstraintViolation;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
@@ -41,6 +48,14 @@ public class LinkerApplicationTests {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+    private static Validator validator;
+
+    @Before
+    public void setUp() {
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        validator = factory.getValidator();
+    }
 	
 	@Test
 	public void savingAndDeleting() {
@@ -130,6 +145,9 @@ public class LinkerApplicationTests {
 	public void validation_NullUser() {
 		User user = new User();
 		
+		Set<ConstraintViolation<User>> violations = validator.validate(user);
+        assert !violations.isEmpty();
+		
 		assertThrows(NullPointerException.class, () -> {
 			userService.save(user);
 		  });		
@@ -140,9 +158,7 @@ public class LinkerApplicationTests {
 		User user = new User();
 		user.setPassword("ghtyrhnf");
 		
-		assertThrows(TransactionSystemException.class, () -> {
-			userService.save(user);
-		  });		
+		assertViolationUser(user);		
 	}
 	
 	@Test
@@ -151,9 +167,7 @@ public class LinkerApplicationTests {
 		user.setPassword("ghtyrhnf");
 		user.setUsername("         ");
 		
-		assertThrows(TransactionSystemException.class, () -> {
-			userService.save(user);
-		  });		
+		assertViolationUser(user);			
 	}
 	
 	@Test
@@ -183,9 +197,7 @@ public class LinkerApplicationTests {
 		user.setPassword("ghtyrhnt");
 		user.setUsername("ghtyrhn");
 		
-		assertThrows(TransactionSystemException.class, () -> {
-			userService.save(user);
-		  });		
+		assertViolationUser(user);				
 	}
 	
 	@Test
@@ -194,18 +206,14 @@ public class LinkerApplicationTests {
 		user.setPassword("ghtyrhnt");
 		user.setUsername("ghtyrhnghtrytfhgtre92");
 		
-		assertThrows(TransactionSystemException.class, () -> {
-			userService.save(user);
-		  });		
+		assertViolationUser(user);				
 	}
 	
 	@Test
 	public void validation_NullNote() {
 		Note note = new Note();
 		
-		assertThrows(TransactionSystemException.class, () -> {
-			noteService.save(note);
-		  });		
+		assertViolationNote(note);		
 	}
 	
 	@Test
@@ -213,9 +221,7 @@ public class LinkerApplicationTests {
 		Note note = new Note();
 		note.setMaxNumberOfViews(1);
 		
-		assertThrows(TransactionSystemException.class, () -> {
-			noteService.save(note);
-		  });		
+		assertViolationNote(note);		
 	}
 	
 	@Test
@@ -223,9 +229,7 @@ public class LinkerApplicationTests {
 		Note note = new Note();
 		note.setName("One morning, when Gregor Samsa woke from");
 		
-		assertThrows(TransactionSystemException.class, () -> {
-			noteService.save(note);
-		  });		
+		assertViolationNote(note);		
 	}
 	
 	@Test
@@ -234,9 +238,7 @@ public class LinkerApplicationTests {
 		note.setMaxNumberOfViews(1);
 		note.setName("          ");
 		
-		assertThrows(TransactionSystemException.class, () -> {
-			noteService.save(note);
-		  });		
+		assertViolationNote(note);			
 	}
 	
 	@Test
@@ -245,9 +247,7 @@ public class LinkerApplicationTests {
 		note.setMaxNumberOfViews(1);
 		note.setName("One morning, when Gregor Samsa woke from.");
 		
-		assertThrows(TransactionSystemException.class, () -> {
-			noteService.save(note);
-		  });		
+		assertViolationNote(note);		
 	}
 	
 	@Test
@@ -257,9 +257,7 @@ public class LinkerApplicationTests {
 		note.setName("One morning, when Gregor Samsa woke from");
 		note.setText(generateRandomString(5000));
 		
-		assertThrows(TransactionSystemException.class, () -> {
-			noteService.save(note);
-		  });		
+		assertViolationNote(note);		
 	}
 	
 	@Test
@@ -268,9 +266,7 @@ public class LinkerApplicationTests {
 		note.setMaxNumberOfViews(0);
 		note.setName("One morning, when Gregor Samsa woke from");
 		
-		assertThrows(TransactionSystemException.class, () -> {
-			noteService.save(note);
-		  });		
+		assertViolationNote(note);		
 	}
 	
 	@Test
@@ -279,9 +275,7 @@ public class LinkerApplicationTests {
 		note.setMaxNumberOfViews(65536);
 		note.setName("One morning, when Gregor Samsa woke from");
 		
-		assertThrows(TransactionSystemException.class, () -> {
-			noteService.save(note);
-		  });		
+		assertViolationNote(note);		
 	}
 	
 	private Note generateRandomNote(boolean fileCanBeNull) {
@@ -345,5 +339,23 @@ public class LinkerApplicationTests {
 	private String generateRandomString(int length) {
 		length++;
 		return RandomStringUtils.random(length, true, true);
+	}
+	
+	private void assertViolationUser(User user) {
+		Set<ConstraintViolation<User>> violations = validator.validate(user);
+        assert !violations.isEmpty();
+		
+		assertThrows(TransactionSystemException.class, () -> {
+			userService.save(user);
+		  });
+	}
+	
+	private void assertViolationNote(Note note) {
+		Set<ConstraintViolation<Note>> violations = validator.validate(note);
+        assert !violations.isEmpty();
+		
+		assertThrows(TransactionSystemException.class, () -> {
+			noteService.save(note);
+		  });
 	}
 }
