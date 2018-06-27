@@ -6,16 +6,15 @@
 	<header th:insert="fragments.html :: navbar"> </header>
 	<div class="container">
 		<h2>Login</h2>
-		<form th:action="@{/login}" method="post">
+		<form th:action="@{/login}" th:object="${user}" method="post">
 			<p>
-				<input type="text" class="form-control" name="username"
-					id="username" placeholder="UserName" required="true"
-					autofocus="true" minlength="8" maxlength="20" />
+				<input type="text" class="form-control" th:field="*{username}"
+					placeholder="UserName" required="true" autofocus="true"
+					minlength="8" maxlength="20" />
 			</p>
 			<p>
-				<input type="password" class="form-control" name="password"
-					id="password" placeholder="Password" required="true" minlength="8"
-					maxlength="20" />
+				<input type="password" class="form-control" th:field="*{password}"
+					placeholder="Password" required="true" minlength="8" maxlength="20" />
 			</p>
 			<p>
 				Don't have an account? <a href="/registration" th:text="'Sign up.'"></a>

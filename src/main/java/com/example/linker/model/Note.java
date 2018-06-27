@@ -30,7 +30,7 @@ public class Note {
 
 	private int numberOfViews = 0;
 
-	@NotNull
+	@NotNull(message = "Max number of views cannot be null")
 	@Min(value = 1, message = "Max number of views should not be less than 1")
     @Max(value = 65535, message = "Max number of views should not be greater than 65535")
 	private Integer maxNumberOfViews;

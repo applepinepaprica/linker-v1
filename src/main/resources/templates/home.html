@@ -6,25 +6,24 @@
 	<header th:insert="fragments.html :: navbar"> </header>
 	<div class="container">
 		<h2>Note</h2>
-		<form th:action="@{/result}" th:object="${note}" method="post"
+		<form action="#" th:action="@{/}" th:object="${note}" method="post"
 			enctype="multipart/form-data">
 			<p>
-				<input type="text" class="form-control" name="name" id="name"
+				<input type="text" class="form-control" th:field="*{name}"
 					placeholder="Name" required="true" autofocus="true" maxlength="40" />
 				<small class="text-danger" th:if="${#fields.hasErrors('name')}"
 					th:errors="*{name}"></small>
 			</p>
 			<p>
-				<textarea class="form-control" name="text" id="text"
-					placeholder="Text" rows="5" maxlength="5000"></textarea>
+				<textarea class="form-control" th:field="*{text}" placeholder="Text"
+					rows="5" maxlength="5000"></textarea>
 				<small class="text-danger" th:if="${#fields.hasErrors('text')}"
 					th:errors="*{text}"></small>
 			</p>
 			<p>
-				<input type="number" class="form-control" name="maxNumberOfViews"
-					id="maxNumberOfViews" placeholder="Max number of views"
-					required="true" min="1" max="65535" /> 
-				<small class="text-danger"
+				<input type="number" class="form-control"
+					th:field="*{maxNumberOfViews}" placeholder="Max number of views"
+					required="true" min="1" max="65535" /> <small class="text-danger"
 					th:if="${#fields.hasErrors('maxNumberOfViews')}"
 					th:errors="*{maxNumberOfViews}"></small>
 			</p>

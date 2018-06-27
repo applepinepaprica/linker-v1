@@ -8,16 +8,15 @@
 		<h2>Registration</h2>
 		<form th:action="@{/registration}" th:object="${user}" method="post">
 			<p>
-				<input type="text" class="form-control" name="username"
-					id="username" placeholder="UserName" required="true"
-					autofocus="true" maxlength="20" /> 
-				<small class="text-danger"
+				<input type="text" class="form-control" th:field="*{username}"
+					placeholder="UserName" required="true" autofocus="true"
+					maxlength="20" /> <small class="text-danger"
 					th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></small>
 			</p>
 			<p>
-				<input type="password" class="form-control" name="password"
-					id="password" placeholder="Password" required="true" maxlength="20" />
-				<small class="text-danger" th:if="${#fields.hasErrors('password')}"
+				<input type="password" class="form-control" th:field="*{password}"
+					placeholder="Password" required="true" maxlength="20" /> <small
+					class="text-danger" th:if="${#fields.hasErrors('password')}"
 					th:errors="*{password}"></small>
 			</p>
 			<p>

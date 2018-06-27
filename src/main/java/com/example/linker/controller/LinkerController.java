@@ -35,16 +35,23 @@ public class LinkerController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(Model model) {
+		model.addAttribute(new User());
 		return "login";
 	}
 
 	@RequestMapping(value = "/registration", method = RequestMethod.GET)
 	public String registrationGet(Model model) {
+		model.addAttribute(new User());
 		return "registration";
 	}
 
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
-	public String registrationPost(User user, Model model) {
+	public String registrationPost(@Valid User user, BindingResult bindingResult, Model model) {
+
+		if (bindingResult.hasErrors()) {
+			return "registration";
+		}
+
 		userService.save(user);
 		return "login";
 	}
@@ -55,16 +62,14 @@ public class LinkerController {
 		return "home";
 	}
 
-	@RequestMapping(value = { "/result" }, method = RequestMethod.POST)
-	public String result(@Valid Note note, 
-			BindingResult bindingResult, 
-			@RequestParam("fileUpload") MultipartFile file,
+	@RequestMapping(value = { "/" }, method = RequestMethod.POST)
+	public String result(@Valid Note note, BindingResult bindingResult, @RequestParam("fileUpload") MultipartFile file,
 			Model model) {
-		
+
 		if (bindingResult.hasErrors()) {
-            return "home";
-        }
-		
+			return "home";
+		}
+
 		noteService.save(note, file);
 		model.addAttribute(note);
 		return "result";
