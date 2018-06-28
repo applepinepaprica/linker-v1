@@ -5,7 +5,7 @@
 </head>
 <body>
 	<header th:insert="fragments.html :: navbar"> </header>
-	<div class="container">
+	<div class="container" th:if="${not #lists.isEmpty(notes)}">
 		<h2>Notes</h2>
 		<table class="table table-hover">
 			<thead>
@@ -25,6 +25,12 @@
 				</tr>
 			</tbody>
 		</table>
+	</div>
+	<div class="container" th:if="${#lists.isEmpty(notes)}">
+		<h2>It seems like you don't have any notes</h2>
+		<p>
+			You can add it <a href="/">here.</a>
+		</p>
 	</div>
 </body>
 </html>
