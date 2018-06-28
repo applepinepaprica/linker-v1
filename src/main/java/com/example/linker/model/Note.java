@@ -22,7 +22,7 @@ public class Note {
 
 	@NotNull(message = "Name cannot be null")
     @NotBlank(message = "Name cannot be blank")
-    @Size(max = 40, message = "Name must be less than 40 characters")
+    @Size(max = 100, message = "Name must be less than 40 characters")
 	private String name;
 
     @Size(max = 5000, message = "Text must be less than 5000 characters")

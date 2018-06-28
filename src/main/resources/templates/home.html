@@ -11,7 +11,7 @@
 			enctype="multipart/form-data">
 			<p>
 				<input type="text" class="form-control" th:field="*{name}"
-					placeholder="Name" required="true" autofocus="true" maxlength="40" />
+					placeholder="Name" required="true" autofocus="true" maxlength="100" />
 				<small class="text-danger" th:if="${#fields.hasErrors('name')}"
 					th:errors="*{name}"></small>
 			</p>
