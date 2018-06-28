@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.linker.exception.NotFoundException;
 import com.example.linker.model.Note;
 import com.example.linker.model.User;
 import com.example.linker.service.NoteService;
@@ -83,7 +84,14 @@ public class LinkerController {
 
 	@RequestMapping(value = { "/url/{url}" }, method = RequestMethod.GET)
 	public String result(@PathVariable String url, Model model) {
-		Note note = noteService.showNoteByUrl(url);
+		Note note;
+
+		try {
+			note = noteService.showNoteByUrl(url);
+		} catch (NullPointerException e) {
+			throw new NotFoundException();
+		}
+
 		model.addAttribute(note);
 		return "note";
 	}
@@ -91,7 +99,11 @@ public class LinkerController {
 	@RequestMapping(value = {
 			"/url/{url}/{fileName}" }, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE, method = RequestMethod.GET)
 	public @ResponseBody byte[] file(@PathVariable String url, @PathVariable String fileName, Model model) {
-		return noteService.getFileDataByUrl(url, fileName);
+		try {
+			return noteService.getFileDataByUrl(url, fileName);
+		} catch (NullPointerException e) {
+			throw new NotFoundException();
+		}
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
