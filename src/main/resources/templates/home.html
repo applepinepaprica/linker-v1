@@ -30,7 +30,8 @@
 			</p>
 			<p>
 				<input type="file" class="form-control" name="fileUpload"
-					id="fileUpload" />
+					id="fileUpload" /> <small class="text-danger"
+					th:if="${#fields.hasErrors('global')}" th:errors="*{global}"></small>
 			</p>
 			<p>
 				<input type="submit" class="btn btn-primary" value="Submit" />

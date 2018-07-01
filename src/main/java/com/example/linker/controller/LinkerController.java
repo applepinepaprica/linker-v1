@@ -82,7 +82,10 @@ public class LinkerController {
 	@RequestMapping(value = { "/" }, method = RequestMethod.POST)
 	public String result(@Valid Note note, BindingResult bindingResult, @RequestParam("fileUpload") MultipartFile file,
 			Model model) {
-
+		if (file.getSize() > 1048576) {
+			bindingResult.reject("error.note", "File must be less than 1MB");
+		}
+		
 		if (bindingResult.hasErrors()) {
 			return "home";
 		}
