@@ -150,6 +150,4 @@ public class Note {
 			return false;
 		return true;
 	}
-
-	
 }

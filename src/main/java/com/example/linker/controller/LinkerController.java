@@ -4,7 +4,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -49,11 +51,25 @@ public class LinkerController {
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
 	public String registrationPost(@Valid User user, BindingResult bindingResult, Model model) {
 
+		if (user.getPassword().length() < 8 || user.getPassword().length() > 20) {
+			bindingResult.rejectValue("password", "error.user", "Password must be between 8 and 20 characters");
+		}
+		
+		if (StringUtils.isBlank(user.getPassword())) {
+			bindingResult.rejectValue("password", "error.user", "Password cannot be blank");
+		}
+
 		if (bindingResult.hasErrors()) {
 			return "registration";
 		}
 
-		userService.save(user);
+		try {
+			userService.save(user);
+		} catch (DataIntegrityViolationException e) {
+			bindingResult.rejectValue("username", "error.user", "An account with this username already exists");
+			return "registration";
+		}
+
 		return "login";
 	}
 

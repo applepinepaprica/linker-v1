@@ -11,13 +11,13 @@
 			<p>
 				<input type="text" class="form-control" th:field="*{username}"
 					placeholder="UserName" required="true" autofocus="true"
-					maxlength="20" /> <small class="text-danger"
+					minlength="8" maxlength="20" /> <small class="text-danger"
 					th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></small>
 			</p>
 			<p>
 				<input type="password" class="form-control" th:field="*{password}"
-					placeholder="Password" required="true" maxlength="20" /> <small
-					class="text-danger" th:if="${#fields.hasErrors('password')}"
+					placeholder="Password" required="true" minlength="8" maxlength="20" />
+				<small class="text-danger" th:if="${#fields.hasErrors('password')}"
 					th:errors="*{password}"></small>
 			</p>
 			<p>
