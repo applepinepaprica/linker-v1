@@ -16,6 +16,8 @@
 			<p>
 				<input type="password" class="form-control" th:field="*{password}"
 					placeholder="Password" required="true" minlength="8" maxlength="20" />
+				<small th:if="${param.error != null}" class="text-danger">Invalid
+					credentials.</small>
 			</p>
 			<p>
 				Don't have an account? <a href="/registration" th:text="'Sign up.'"></a>

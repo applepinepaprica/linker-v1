@@ -123,7 +123,6 @@ public class LinkerApplicationTests {
 		Note note = generateRandomNote(true);
 		noteService.save(note);
 		assert note.getUser() != null;
-
 		
 		Note note2 = noteService.showNoteByUrl(note.getUrl());
 		note.setNumberOfViews(1);
