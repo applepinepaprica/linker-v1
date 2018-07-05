@@ -30,16 +30,16 @@ DROP TABLE IF EXISTS file;
 
 CREATE TABLE file(
 	`file_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	`name` varchar(255) NOT NULL,
+	`name` text(255) NOT NULL,
 	`data` longblob NOT NULL,
 	`numberOfViews` int NOT NULL DEFAULT 0
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE note(
 	`note_id` int NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	`url` varchar(36) NOT NULL,
-	`name` varchar(100) NOT NULL,
-	`text` varchar(5000) DEFAULT NULL,
+	`name` text(100) NOT NULL,
+	`text` text(5000) DEFAULT NULL,
 	`numberOfViews` int NOT NULL DEFAULT 0,
 	`maxNumberOfViews` smallint unsigned NOT NULL,
 	`file_id` int DEFAULT NULL,
@@ -47,4 +47,4 @@ CREATE TABLE note(
 	UNIQUE KEY `url_UNIQUE` (`url`),
 	CONSTRAINT `FK859n2jvi8ivhui0rl0etyekv` FOREIGN KEY (`file_id`) REFERENCES `file` (`file_id`),
 	CONSTRAINT `FK859n2jvi8ivhui0rl0esqsfb` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
