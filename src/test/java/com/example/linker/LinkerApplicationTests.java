@@ -127,13 +127,9 @@ public class LinkerApplicationTests {
 		
 		Note note2 = noteService.showNoteByUrl(note.getUrl());
 		note.setNumberOfViews(1);
-		System.out.println("!!!!!!!!!!!!!!!!!!!");
-		System.out.println(note.toString());
-		System.out.println(note2.toString());
-		System.out.println("!!!!!!!!!!!!!!!!!!!");
 		assert note.equals(note2);
 
-		User user = userRepository.findByUsername("1");
+		User user = userRepository.findByUsername(note.getUser().getUsername());
 		assertThat(note2.getUser()).isEqualTo(user);
         
 		assert user.getNotes().contains(note2);

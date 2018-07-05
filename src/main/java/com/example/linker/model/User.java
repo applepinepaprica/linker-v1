@@ -86,20 +86,10 @@ public class User {
 		User other = (User) obj;
 		if (id != other.id)
 			return false;
-		if (notes == null) {
-			if (other.notes != null)
-				return false;
-		} else if (!notes.equals(other.notes))
-			return false;
 		if (password == null) {
 			if (other.password != null)
 				return false;
 		} else if (!password.equals(other.password))
-			return false;
-		if (roles == null) {
-			if (other.roles != null)
-				return false;
-		} else if (!roles.equals(other.roles))
 			return false;
 		if (username == null) {
 			if (other.username != null)
@@ -107,11 +97,5 @@ public class User {
 		} else if (!username.equals(other.username))
 			return false;
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", roles=" + roles + ", notes="
-				+ notes + "]";
 	}	
 }

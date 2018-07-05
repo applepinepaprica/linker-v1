@@ -5,7 +5,6 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -39,7 +38,7 @@ public class Note {
 	@JoinColumn(name = "file_id")
 	private File file;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user = null;
 	
@@ -151,11 +150,5 @@ public class Note {
 		} else if (!user.equals(other.user))
 			return false;
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "Note [id=" + id + ", url=" + url + ", name=" + name + ", text=" + text + ", numberOfViews="
-				+ numberOfViews + ", maxNumberOfViews=" + maxNumberOfViews + ", file=" + file + ", user=" + user + "]";
 	}
 }
