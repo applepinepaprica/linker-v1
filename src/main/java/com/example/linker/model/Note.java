@@ -39,8 +39,10 @@ public class Note {
 	@JoinColumn(name = "file_id")
 	private File file;
 
-	private Integer user_id = null;
-
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user = null;
+	
 	public int getId() {
 		return id;
 	}
@@ -97,12 +99,12 @@ public class Note {
 		this.file = file;
 	}
 
-	public Integer getUser_id() {
-		return user_id;
+	public User getUser() {
+		return user;
 	}
 
-	public void setUser_id(Integer user_id) {
-		this.user_id = user_id;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	@Override
@@ -143,11 +145,17 @@ public class Note {
 				return false;
 		} else if (!url.equals(other.url))
 			return false;
-		if (user_id == null) {
-			if (other.user_id != null)
+		if (user == null) {
+			if (other.user != null)
 				return false;
-		} else if (!user_id.equals(other.user_id))
+		} else if (!user.equals(other.user))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Note [id=" + id + ", url=" + url + ", name=" + name + ", text=" + text + ", numberOfViews="
+				+ numberOfViews + ", maxNumberOfViews=" + maxNumberOfViews + ", file=" + file + ", user=" + user + "]";
 	}
 }

@@ -61,7 +61,7 @@ public class LinkerApplicationTests {
 	public void savingAndDeleting() {
 		Note note = generateRandomNote(true);
 		noteService.save(note);
-		assert note.getUser_id() == null;
+		assert note.getUser() == null;
 		
 		Note note2 = noteService.showNoteByUrl(note.getUrl());
 		
@@ -118,19 +118,24 @@ public class LinkerApplicationTests {
 	}
 	
 	@Test
-	@WithMockUser("1")
+	@WithMockUser("22222222")
 	public void savingAndDeletingWithAuth() {
 		Note note = generateRandomNote(true);
 		noteService.save(note);
-		assert note.getUser_id() != null;
+		assert note.getUser() != null;
+
 		
 		Note note2 = noteService.showNoteByUrl(note.getUrl());
 		note.setNumberOfViews(1);
+		System.out.println("!!!!!!!!!!!!!!!!!!!");
+		System.out.println(note.toString());
+		System.out.println(note2.toString());
+		System.out.println("!!!!!!!!!!!!!!!!!!!");
 		assert note.equals(note2);
-		
+
 		User user = userRepository.findByUsername("1");
-		assertThat(note2.getUser_id()).isEqualTo(user.getId());
-		
+		assertThat(note2.getUser()).isEqualTo(user);
+        
 		assert user.getNotes().contains(note2);
 		assert noteService.getUsersNotes().contains(note2);
 	
@@ -179,17 +184,6 @@ public class LinkerApplicationTests {
 			userService.save(user);
 		  });		
 	}
-	
-	/*@Test
-	public void validation_BlankPasssword() {
-		User user = new User();
-		user.setUsername("ghtyrhnf");
-		user.setPassword("          ");
-		
-		assertThrows(TransactionSystemException.class, () -> {
-			userService.save(user);
-		  });		
-	}*/
 	
 	@Test
 	public void validation_MinSizeUsername() {
@@ -245,7 +239,7 @@ public class LinkerApplicationTests {
 	public void validation_SizeName() {
 		Note note = new Note();
 		note.setMaxNumberOfViews(1);
-		note.setName("One morning, when Gregor Samsa woke from.");
+		note.setName("One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed int");
 		
 		assertViolationNote(note);		
 	}

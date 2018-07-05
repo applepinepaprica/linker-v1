@@ -49,7 +49,7 @@ public class NoteServiceImpl implements NoteService {
 		try {
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			User user = userRepository.findByUsername(auth.getName());
-			note.setUser_id(user.getId());
+			note.setUser(user);
 		}
 		catch (NullPointerException e) {	
 		}
