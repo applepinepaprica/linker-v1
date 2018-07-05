@@ -64,6 +64,27 @@ public class LinkerApplicationTests {
 		assert note.getUser() == null;
 		
 		Note note2 = noteService.showNoteByUrl(note.getUrl());
+		assert note2.getUser() == null;
+		
+		note.setNumberOfViews(1);
+		assert note.equals(note2);
+		
+		noteRepository.delete(note2);
+		
+		assertThrows(NullPointerException.class, () -> {
+			noteService.showNoteByUrl(note.getUrl());
+		  });		
+	}
+	
+	@Test
+	public void savingAndDeletingWithFile() {
+		Note note = generateRandomNote(false);
+		noteService.save(note);
+		assert note.getUser() == null;
+		
+		Note note2 = noteService.showNoteByUrl(note.getUrl());
+		assert note2.getFile() != null;
+		assert note.getFile().equals(note2.getFile());
 		
 		note.setNumberOfViews(1);
 		assert note.equals(note2);
@@ -265,6 +286,61 @@ public class LinkerApplicationTests {
 		note.setName("One morning, when Gregor Samsa woke from");
 		
 		assertViolationNote(note);		
+	}
+	
+	@Test
+	public void cyrilicNote() {
+		Note note = new Note();
+		note.setName("Название");
+		note.setText("Текст");
+		note.setMaxNumberOfViews(10);
+		
+		noteService.save(note);
+		assert note.getUser() == null;
+		
+		Note note2 = noteService.showNoteByUrl(note.getUrl());
+		
+		note.setNumberOfViews(1);
+		assert note.equals(note2);
+		
+		noteRepository.delete(note2);
+		
+		assertThrows(NullPointerException.class, () -> {
+			noteService.showNoteByUrl(note.getUrl());
+		  });		
+	}
+	
+	@Test
+	public void cyrilicFile() {
+		Note note = new Note();
+		note.setName("Название");
+		note.setText("Текст");
+		note.setMaxNumberOfViews(10);
+		
+		File file = new File();
+		file.setName("текст.txt");
+		file.setData(new byte[100]);
+		note.setFile(file);
+		
+		noteService.save(note);
+		assert note.getUser() == null;
+		
+		Note note2 = noteService.showNoteByUrl(note.getUrl());
+		
+		note.setNumberOfViews(1);
+		assert note.equals(note2);
+		assert note2.getFile() != null;
+		assert note.getFile().equals(note2.getFile());
+		
+		System.out.println("!!!!!!!!!!!!!!!");
+		System.out.println(note.getFile().getName());
+		System.out.println(note2.getFile().getName());
+		
+		noteRepository.delete(note2);
+		
+		assertThrows(NullPointerException.class, () -> {
+			noteService.showNoteByUrl(note.getUrl());
+		  });		
 	}
 	
 	private Note generateRandomNote(boolean fileCanBeNull) {
