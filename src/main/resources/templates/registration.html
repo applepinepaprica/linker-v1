@@ -11,7 +11,7 @@
 			<p>
 				<input type="text" class="form-control" th:field="*{username}"
 					placeholder="UserName" required="true" autofocus="true"
-					minlength="8" maxlength="20" /> <small class="text-danger"
+					maxlength="20" /> <small class="text-danger"
 					th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></small>
 			</p>
 			<p>

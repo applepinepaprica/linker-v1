@@ -22,7 +22,7 @@ public class User {
 	@Column(unique = true)
 	@NotNull(message = "Username cannot be null")
 	@NotBlank(message = "Username cannot be blank")
-	@Size(min = 8, max = 20, message = "Username must be between 8 and 20 characters")
+	@Size(max = 20, message = "Username must be less than 20 characters")
 	private String username;
 
 	@NotNull(message = "Password cannot be null")
