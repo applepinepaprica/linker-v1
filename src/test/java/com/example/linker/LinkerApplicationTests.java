@@ -202,15 +202,6 @@ public class LinkerApplicationTests {
 	}
 	
 	@Test
-	public void validation_MinSizeUsername() {
-		User user = new User();
-		user.setPassword("ghtyrhnt");
-		user.setUsername("ghtyrhn");
-		
-		assertViolationUser(user);				
-	}
-	
-	@Test
 	public void validation_MaxSizeUsername() {
 		User user = new User();
 		user.setPassword("ghtyrhnt");
@@ -390,8 +381,8 @@ public class LinkerApplicationTests {
 		Random rand = new Random();
 		
 		User user = new User();
-		user.setUsername(generateRandomString(rand.nextInt(12) + 7));
-		user.setPassword(generateRandomString(rand.nextInt(12) + 7));
+		user.setUsername(generateRandomString(rand.nextInt(20)));
+		user.setPassword(generateRandomString(rand.nextInt(13) + 7));
 		
 		System.out.println("============================");
 		System.out.println(user.getUsername());
