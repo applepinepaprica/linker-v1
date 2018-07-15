@@ -86,7 +86,7 @@ public class LinkerController {
 			bindingResult.reject("error.note", "File must be less than 1MB");
 		}
 		
-		if (file.getSize() == 0) {
+		if (!file.getOriginalFilename().isEmpty() && file.getSize() == 0) {
 			bindingResult.reject("error.note", "File must not be empty");
 		}
 		
