@@ -8,9 +8,11 @@
 	<div class="container">
 		<h2
 			th:text="'Note &ldquo;' + ${note.name} + '&rdquo; successfully created'"></h2>
+		<p>You can find it there:</p>
 		<p>
-			You can find it there: <a th:href="'/url/' + ${note.url}"
-				th:text="link"></a>
+			<a
+				th:href="@{__${#httpServletRequest.requestURL}__url/__${note.url}__}"
+				th:text="@{__${#httpServletRequest.requestURL}__url/__${note.url}__}"></a>
 		</p>
 	</div>
 </body>
