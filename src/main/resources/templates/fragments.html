@@ -36,7 +36,10 @@
 						</li>
 					</div>
 					<div sec:authorize="!isAuthenticated()">
-						<li class="nav-item"><a class="nav-link" href="/login">Login/Registration</a></li>
+						<li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+					</div>
+					<div sec:authorize="!isAuthenticated()">
+						<li class="nav-item"><a class="nav-link" href="/registration">Registration</a></li>
 					</div>
 				</ul>
 			</div>
