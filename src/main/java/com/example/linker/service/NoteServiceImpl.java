@@ -62,7 +62,7 @@ public class NoteServiceImpl implements NoteService {
 		
 		note.setNumberOfViews(note.getNumberOfViews() + 1);
 
-		if (note.getNumberOfViews() == note.getMaxNumberOfViews()) {
+		if (note.getFile() == null && note.getNumberOfViews() == note.getMaxNumberOfViews()) {
 			noteRepository.delete(note);
 		} else {
 			noteRepository.save(note);

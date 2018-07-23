@@ -27,6 +27,7 @@
 					required="true" min="1" max="65535" /> <small class="text-danger"
 					th:if="${#fields.hasErrors('maxNumberOfViews')}"
 					th:errors="*{maxNumberOfViews}"></small>
+					<small class="text-muted">(Если к заметке прикреплен файл, ограничивает количество скачиваний файла, при отсутствии файла ограничивает количество просмотров заметки)</small>
 			</p>
 			<p>
 				<input type="file" class="form-control" name="fileUpload"
